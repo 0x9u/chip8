@@ -1,4 +1,4 @@
-#include "state.hpp"
+#include "chip8.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -7,7 +7,7 @@
 
 #include "font.hpp"
 
-void State::LoadROM(const char *filename) {
+void Chip8::loadROM(const char *filename) {
     std::ifstream file;
     try {
         file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -27,7 +27,7 @@ void State::LoadROM(const char *filename) {
     std::memcpy(dest, buffer.data(), size);
 }
 
-State::State() {
+Chip8::Chip8() {
     pc = START_ADDRESS;
 
     uint8_t *dest = memory + FONTSET_START_ADDRESS;
