@@ -42,10 +42,8 @@ class Chip8 {
     uint16_t pc{};
     uint16_t opcode{};
     uint16_t stack[16]{};
-    uint16_t keypad[16]{};
     // index for display
     uint16_t index{};
-    uint32_t display[SCREEN_WIDTH * SCREEN_HEIGHT]{};
 
     // table that points to functions
     typedef void (Chip8::*Chip8Func)();
@@ -121,6 +119,9 @@ class Chip8 {
     void opFx65();
 
    public:
+    Chip8();
     void loadROM(const char *filename);
     void cycle();
+    uint32_t display[SCREEN_WIDTH * SCREEN_HEIGHT]{};
+    uint8_t keypad[16]{};
 };

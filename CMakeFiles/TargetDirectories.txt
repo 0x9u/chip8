@@ -1,0 +1,3 @@
+/mnt/c/Users/killp/OneDrive/Documents/Programming/cpp/chip8/CMakeFiles/chip8.dir
+/mnt/c/Users/killp/OneDrive/Documents/Programming/cpp/chip8/CMakeFiles/edit_cache.dir
+/mnt/c/Users/killp/OneDrive/Documents/Programming/cpp/chip8/CMakeFiles/rebuild_cache.dir
