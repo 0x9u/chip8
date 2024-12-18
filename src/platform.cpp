@@ -41,13 +41,14 @@ Platform::Platform(const char *title, unsigned int window_width,
 }
 
 Platform::~Platform() {
+    std::cout << "Destroying window" << std::endl;
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
-void Platform::update(const void *buffer, int pitch) {
+void Platform::update(void *const buffer, int pitch) {
     SDL_UpdateTexture(texture, nullptr, buffer, pitch);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, nullptr, nullptr);

@@ -13,7 +13,7 @@ void Chip8::op2nnn() {
     pc = get_addr();
 }
 
-void Chip8::op3xkk() { pc += 2 * (registers[get_vx()] != get_byte()); }
+void Chip8::op3xkk() { pc += 2 * (registers[get_vx()] == get_byte()); }
 
 void Chip8::op4xkk() { pc += 2 * (registers[get_vx()] != get_byte()); }
 
@@ -85,13 +85,15 @@ void Chip8::opDxyn() {
         uint8_t sprite_byte = memory[index + row];
         for (size_t col = 0; col < 8; col++) {
             uint8_t sprite_pixel = sprite_byte & (0x80u >> col);
+            uint32_t index = (ypos + row) * SCREEN_WIDTH + (xpos + col);
+            if (index >= SCREEN_WIDTH * SCREEN_HEIGHT) continue;
             uint32_t* display_pixel =
-                &display[(ypos + row) * SCREEN_WIDTH + (xpos + col)];
+                &display[(ypos + row) * SCREEN_WIDTH + (xpos + col)];            
 
             bool cond = sprite_pixel && *display_pixel == 0xFFFFFFFF;
             registers[VF] = cond + registers[VF] * !cond;
 
-            *display_pixel ^= 0xFFFFFFFF * sprite_pixel;
+            *display_pixel ^= 0xFFFFFFFF * (bool)sprite_pixel;   
 
         }
     }
@@ -105,6 +107,7 @@ void Chip8::opFx07() { registers[get_vx()] = delay_timer; }
 void Chip8::opFx0A() {
     for (size_t i = 0; i < 16; i++) {
         if (keypad[i]) {
+            std::cout << "Key pressed: " << i << std::endl;
             registers[get_vx()] = i;
             return;
         }

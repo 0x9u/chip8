@@ -11,7 +11,7 @@ class Platform {
         unsigned int texture_width,
         unsigned int texture_height);
     ~Platform();
-    void update(const void* buffer, int pitch);
+    void update(void* const buffer, int pitch);
     bool processInput(uint8_t *keys);
     private:
             SDL_Window *window{};

@@ -98,6 +98,9 @@ void Chip8::cycle() {
 
     pc += 2;
 
+    // std::cout << "opcode: 0x" << std::hex << opcode << std::endl;
+    // std::cout << "table index: 0x" << std::hex << (int)get_table_idx() << std::endl;
+
     (this->*table[get_table_idx()])();
 
     delay_timer -= delay_timer > 0;
