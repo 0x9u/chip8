@@ -14,5 +14,5 @@ find_package(SDL2 REQUIRED)
 target_include_directories(chip8 PRIVATE ${SDL2_INCLUDE_DIRS})
 target_link_libraries(chip8 PRIVATE ${SDL2_LIBRARIES})
 
-target_compile_options(chip8 PRIVATE -fsanitize=address,undefined -g)
+target_compile_options(chip8 PRIVATE -fno-omit-frame-pointer -fsanitize=address,undefined -g)
 target_link_options(chip8 PRIVATE -fsanitize=address,undefined -g)

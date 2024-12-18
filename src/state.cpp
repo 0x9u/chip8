@@ -89,6 +89,7 @@ Chip8::Chip8() {
     tableF[0x1E] = &Chip8::opFx1E;
     tableF[0x29] = &Chip8::opFx29;
     tableF[0x33] = &Chip8::opFx33;
+    tableF[0x55] = &Chip8::opFx55;
     tableF[0x65] = &Chip8::opFx65;
 }
 
@@ -96,7 +97,7 @@ void Chip8::cycle() {
     opcode = (memory[pc] << 8u) | memory[pc + 1];
 
     pc += 2;
-    // todo: code breaks here :despair:
+
     (this->*table[get_table_idx()])();
 
     delay_timer -= delay_timer > 0;

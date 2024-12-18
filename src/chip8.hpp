@@ -3,6 +3,7 @@
 #include <chrono>
 #include <cstdint>
 #include <random>
+#include <iostream>
 
 constexpr unsigned int START_ADDRESS = 0x200;
 constexpr unsigned int FONTSET_START_ADDRESS = 0x50;
@@ -61,9 +62,9 @@ class Chip8 {
     inline uint8_t get_vx() const { return (opcode & 0x0F00u) >> 8u; }
     inline uint8_t get_vy() const { return (opcode & 0x00F0u) >> 4u; }
     inline uint8_t get_byte() const { return opcode & 0x00FFu; }
-    inline uint8_t get_addr() const { return opcode & 0x0FFFu; }
+    inline uint16_t get_addr() const { return opcode & 0x0FFFu; }
     inline uint8_t get_nibble() const { return opcode & 0x000Fu; }
-    inline uint8_t get_table_idx() const { return (opcode & 0xF000u) >> 12u; }
+    inline uint16_t get_table_idx() const { return (opcode & 0xF000u) >> 12u; }
 
     void ftable0() {
         (this->*table0[get_nibble()])();

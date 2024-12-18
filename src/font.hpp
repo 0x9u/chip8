@@ -4,6 +4,7 @@
 
 constexpr unsigned int FONTSET_SIZE = 80;
 
+// Shamelessly stolen from: https://austinmorlan.com/posts/chip8_emulator/
 uint8_t fontset[FONTSET_SIZE] = {
 	0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
 	0x20, 0x60, 0x20, 0x20, 0x70, // 1

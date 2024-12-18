@@ -37,9 +37,9 @@ void Chip8::op8xy4() {
     // cause its well defined
     uint8_t rx = registers[get_vx()];
     uint8_t ry = registers[get_vy()];
-    uint8_t result = rx + ry;
+    uint16_t result = rx + ry;
     // From hackers delight - overflow detection
-    registers[VF] = ((rx & ry) | ((rx | ry) & ~result)) >> 7u;
+    registers[VF] = ((rx & ry) | ((rx | ry) & ~result)) >> 15u;
     registers[get_vx()] = result;
 }
 
@@ -80,20 +80,19 @@ void Chip8::opDxyn() {
     uint8_t xpos = registers[get_vx()] % SCREEN_WIDTH;
     uint8_t height = get_nibble();
 
-    registers[VF] = 0;
+    registers[VF] = 0;  
     for (size_t row = 0; row < height; row++) {
         uint8_t sprite_byte = memory[index + row];
         for (size_t col = 0; col < 8; col++) {
-            uint8_t sprite_pixel = sprite_byte & (0x80u >> col) != 0;
+            uint8_t sprite_pixel = sprite_byte & (0x80u >> col);
             uint32_t* display_pixel =
                 &display[(ypos + row) * SCREEN_WIDTH + (xpos + col)];
 
-            // todo: i think i can optimise this branch
-            if (sprite_pixel && *display_pixel == 0xFFFFFFFF) {
-                registers[VF] = 1;
-            }
+            bool cond = sprite_pixel && *display_pixel == 0xFFFFFFFF;
+            registers[VF] = cond + registers[VF] * !cond;
 
             *display_pixel ^= 0xFFFFFFFF * sprite_pixel;
+
         }
     }
 }

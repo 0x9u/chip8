@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
                 if (delta > delay) {
                         last_cycle = current_cycle;
                         chip8.cycle();
+                        
                         platform.update(chip8.display, pitch);
                 }
         }
